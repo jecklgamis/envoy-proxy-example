@@ -12,25 +12,15 @@ static_resources:
         - filters:
             - name: envoy.http_connection_manager
               config:
-                stat_prefix: ingress_http
+                stat_prefix: ingress_https
                 route_config:
                   name: local_route
                   virtual_hosts:
                     - name: backend
                       domains: ["*"]
                       routes:
-                        - match: { prefix: "/logging" }
-                          route: { cluster: envoy_admin }
-                        - match: { prefix: "/clusters" }
-                          route: { cluster: envoy_admin }
-                        - match: { prefix: "/config_dump" }
-                          route: { cluster: envoy_admin }
-                        - match: { prefix: "/stats" }
-                          route: { cluster: envoy_admin }
-                        - match: { prefix: "/stats/prometheus" }
-                          route: { cluster: envoy_admin }
                         - match: { prefix: "/" }
-                          route: { cluster: default_app, timeout: 30s }
+                          route: { cluster: default_app, timeout: 15s }
                 http_filters:
                   - name: envoy.router
                     config: {}
@@ -48,10 +38,3 @@ static_resources:
       dns_lookup_family: V4_ONLY
       lb_policy: ROUND_ROBIN
       hosts: [{ socket_address: { address: 127.0.0.1, port_value: 8080 }}]
-
-    - name: envoy_admin
-      connect_timeout: 0.25s
-      type: LOGICAL_DNS
-      dns_lookup_family: V4_ONLY
-      lb_policy: ROUND_ROBIN
-      hosts: [{ socket_address: { address: 127.0.0.1, port_value: 9901 }}]
