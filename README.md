@@ -1,4 +1,5 @@
-## envoy-proxy 
+## envoy-proxy
+
 
 An Alpine Linux-based Envoy Proxy container. This is a reference implementation for building an Envoy Proxy 
 side car for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault 
@@ -8,7 +9,12 @@ for more info.
 This container runs a statically configured HTTPS listener using port 8443 and routes `/` traffic to a co-located 
 upstream `app.js` running on port 8080.
 
+Run the Docker container built in [Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy): 
+```
+docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy:latest
+```
 ## Running Locally
+To build and run locally, follow the steps below. Ensure you have a working Docker environment.
 
 #### Clone this repo:
 
