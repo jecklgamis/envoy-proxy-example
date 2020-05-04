@@ -2,16 +2,11 @@
 
 An Alpine Linux-based Envoy Proxy container. This is a reference implementation for building an Envoy Proxy 
 side car for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault 
-injection tests, or if you're simply exploring other Envoy Proxy features. See the [Envoy Docs](https://www.envoyproxy.io/docs/envoy/latest/) 
+injection tests, or if you're simply exploring Envoy Proxy features. See the [Envoy Docs](https://www.envoyproxy.io/docs/envoy/latest/) 
 for more info.
 
 This container runs a statically configured HTTPS listener using port 8443 and routes `/` traffic to a co-located 
 upstream `app.js` running on port 8080.
-
-What's inside the container?
-* Envoy proxy 
-* `app.js`, a minimal HTTP server
-* `supervisord`, this enables the Envoy Proxy and `app.js` simultaneously
 
 ## Running Locally
 
@@ -57,7 +52,7 @@ $ curl -k https://localhost:8443
 {"ok":"true","request":{"remote_ip":"::ffff:127.0.0.1","method":"GET","path":"/","headers":{"host":"localhost:8443","user-agent":"curl/7.68.0","accept":"*/*","x-forwarded-proto":"https","x-request-id":"3c641849-de69-4c9e-886c-c429566dd100","x-envoy-expected-rq-timeout-ms":"30000","content-length":"0"},"query":null,"body":""}
 ```
 Here you will notice some HTTP headers with `x-envoy` prefix. This is automatically added by Envoy when it sends the
-request the upstream (`app.js` in this case) and `app.js` simply returns these.
+request to the upstream (`app.js` in this case) and `app.js` simply returns these.
 
 #### Verify Envoy Proxy admin front end
 Point your browser to `http://localhost:9901`. You should be able to see links to other endpoints such as the config, 
