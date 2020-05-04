@@ -1,0 +1,57 @@
+admin:
+  access_log_path: /tmp/admin_access.log
+  address:
+    socket_address: { protocol: TCP, address: 0.0.0.0, port_value: 9901 }
+
+static_resources:
+  listeners:
+    - name: https_listener
+      address:
+        socket_address: { protocol: TCP, address: 0.0.0.0, port_value: 8443 }
+      filter_chains:
+        - filters:
+            - name: envoy.http_connection_manager
+              config:
+                stat_prefix: ingress_http
+                route_config:
+                  name: local_route
+                  virtual_hosts:
+                    - name: backend
+                      domains: ["*"]
+                      routes:
+                        - match: { prefix: "/logging" }
+                          route: { cluster: envoy_admin }
+                        - match: { prefix: "/clusters" }
+                          route: { cluster: envoy_admin }
+                        - match: { prefix: "/config_dump" }
+                          route: { cluster: envoy_admin }
+                        - match: { prefix: "/stats" }
+                          route: { cluster: envoy_admin }
+                        - match: { prefix: "/stats/prometheus" }
+                          route: { cluster: envoy_admin }
+                        - match: { prefix: "/" }
+                          route: { cluster: default_app, timeout: 30s }
+                http_filters:
+                  - name: envoy.router
+                    config: {}
+          tls_context:
+            common_tls_context:
+              tls_certificates:
+                - certificate_chain:
+                    filename: "/etc/server.crt"
+                  private_key:
+                    filename: "/etc/server.key"
+  clusters:
+    - name: default_app
+      connect_timeout: 0.25s
+      type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      hosts: [{ socket_address: { address: 127.0.0.1, port_value: 8080 }}]
+
+    - name: envoy_admin
+      connect_timeout: 0.25s
+      type: LOGICAL_DNS
+      dns_lookup_family: V4_ONLY
+      lb_policy: ROUND_ROBIN
+      hosts: [{ socket_address: { address: 127.0.0.1, port_value: 9901 }}]
