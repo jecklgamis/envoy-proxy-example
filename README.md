@@ -11,7 +11,7 @@ upstream `app.js` running on port 5050.
 
 Run the Docker container built in [Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy): 
 ```
-docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy:latest
+docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy:latest
 ```
 ## Running Locally
 To build and run locally, follow the steps below. Ensure you have a working Docker environment.
