@@ -5,7 +5,7 @@ default:
 image:
 	docker build -t $(IMAGE_NAME):latest .
 run:
-	docker run  -p 9901:9901 -p 8443:8443 $(IMAGE_NAME):latest
+	docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 $(IMAGE_NAME):latest
 run-bash:
 	docker run -i -t $(IMAGE_NAME) /bin/bash
 login:

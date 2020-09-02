@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec node /app.js 8080
+exec node /app.js 5050
