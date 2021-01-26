@@ -1,4 +1,4 @@
-FROM envoyproxy/envoy-alpine:v1.15.0
+FROM envoyproxy/envoy-alpine:v1.17.0
 
 RUN apk update && apk add --no-cache bash curl dumb-init
 RUN apk update && apk add --no-cache --update nodejs npm
@@ -23,6 +23,9 @@ RUN chmod +x /run_envoy.sh
 COPY envoy* /etc/envoy/
 COPY server.crt /etc/
 COPY server.key /etc/
+
+EXPOSE 8080
+EXPOSE 8443
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["/usr/bin/supervisord","-c","/etc/supervisor.d/supervisor.ini"]
