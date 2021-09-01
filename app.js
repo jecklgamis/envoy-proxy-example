@@ -9,7 +9,7 @@ if (process.argv.length <= 2) {
 const host = "0.0.0.0";
 const port = process.argv[2];
 
-var handler = function (request, response) {
+const handler = function (request, response) {
     let body = [];
     const url_parts = url.parse(request.url);
     const request_data = {

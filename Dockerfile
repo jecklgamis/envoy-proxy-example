@@ -1,23 +1,17 @@
-FROM envoyproxy/envoy-alpine:v1.17.0
+FROM envoyproxy/envoy-alpine:v1.19.1
 
-RUN apk update && apk add --no-cache bash curl dumb-init
-RUN apk update && apk add --no-cache --update nodejs npm
-RUN apk update && apk add --no-cache python3 py3-pip
+RUN apk update && apk add --no-cache bash curl dumb-init nodejs npm python3 py3-pip
 RUN pip install --upgrade pip
-
 COPY requirements.txt /
 RUN pip install -r /requirements.txt
 
-## supervisor
 COPY supervisor.ini /etc/supervisor.d/
 RUN mkdir -p /var/log/supervisor
 
-## default app
 COPY app.js /
 COPY run_app.sh /
 RUN chmod +x /run_app.sh
 
-## envoy
 COPY run_envoy.sh /
 RUN chmod +x /run_envoy.sh
 COPY envoy* /etc/envoy/
