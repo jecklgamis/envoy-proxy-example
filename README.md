@@ -31,11 +31,11 @@ docker build -t jecklgamis/envoy-proxy-example:latest .
 
 #### Run the Docker container
 ```
-docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:latest
+docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
 ```
 Example output:
 ```
-docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:latest
+docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
 2020-09-02 19:12:01,126 INFO Set uid to user 0 succeeded
 2020-09-02 19:12:01,130 INFO supervisord started with pid 6
 2020-09-02 19:12:02,098 INFO spawned: 'default-app' with pid 8
