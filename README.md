@@ -10,9 +10,9 @@ for more info.
 This container runs a statically configured HTTP/HTTPS listener and routes `/` traffic to a co-located 
 upstream `app.js` running on port 5050.
 
-Run the Docker container built in [Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy-example): 
+Run the Docker from Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy-example): 
 ```
-docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:latest
+docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
 ```
 ## Running Locally
 To build and run locally, follow the steps below. Ensure you have a working Docker environment.
@@ -26,7 +26,7 @@ git clone git@github.com:jecklgamis/envoy-proxy-example.git
 #### Build the Docker container
 ```
 ./generate-ssl-certs.sh
-docker build -t jecklgamis/envoy-proxy-example:latest .
+docker build -t jecklgamis/envoy-proxy-example:main .
 ```
 
 #### Run the Docker container
