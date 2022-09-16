@@ -1,5 +1,6 @@
 ## envoy-proxy-example
 
+[![Build](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yml/badge.svg)](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yml)
 
 An Alpine Linux-based Envoy Proxy image. This is a reference implementation for building an Envoy Proxy 
 side car for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault 
