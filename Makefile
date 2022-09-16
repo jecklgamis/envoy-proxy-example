@@ -1,4 +1,4 @@
-IMAGE_NAME:=jecklgamis/envoy-proxy-template
+IMAGE_NAME:=jecklgamis/envoy-proxy-example
 IMAGE_TAG:=$(shell git rev-parse HEAD)
 
 default:
@@ -15,5 +15,3 @@ ssl-certs:
 	@./generate-ssl-certs.sh
 all: ssl-certs image
 up: all run
-push:
-	docker image push $(IMAGE_NAME):$(IMAGE_TAG)

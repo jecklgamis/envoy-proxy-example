@@ -1,4 +1,4 @@
-## envoy-proxy-template
+## envoy-proxy-example
 
 
 An Alpine Linux-based Envoy Proxy image. This is a reference implementation for building an Envoy Proxy 
@@ -9,9 +9,9 @@ for more info.
 This container runs a statically configured HTTP/HTTPS listener and routes `/` traffic to a co-located 
 upstream `app.js` running on port 5050.
 
-Run the Docker container built in [Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy-template): 
+Run the Docker container built in [Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy-example): 
 ```
-docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-template:latest
+docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:latest
 ```
 ## Running Locally
 To build and run locally, follow the steps below. Ensure you have a working Docker environment.
@@ -19,29 +19,29 @@ To build and run locally, follow the steps below. Ensure you have a working Dock
 #### Clone this repo:
 
 ```
-git clone git@github.com:jecklgamis/envoy-proxy-template.git
+git clone git@github.com:jecklgamis/envoy-proxy-example.git
 ```
 
 #### Build the Docker container
 ```
 ./generate-ssl-certs.sh
-docker build -t jecklgamis/envoy-proxy-template:latest .
+docker build -t jecklgamis/envoy-proxy-example:latest .
 ```
 
 #### Run the Docker container
 ```
-docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-template:latest
+docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:latest
 ```
 Example output:
 ```
-docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-template:latest
+docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:latest
 2020-09-02 19:12:01,126 INFO Set uid to user 0 succeeded
 2020-09-02 19:12:01,130 INFO supervisord started with pid 6
 2020-09-02 19:12:02,098 INFO spawned: 'default-app' with pid 8
-2020-09-02 19:12:02,100 INFO spawned: 'envoy-proxy-template' with pid 9
+2020-09-02 19:12:02,100 INFO spawned: 'envoy-proxy-example' with pid 9
 HTTP server listening on http://0.0.0.0:5050
 2020-09-02 19:12:03,220 INFO success: default-app entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
-2020-09-02 19:12:03,221 INFO success: envoy-proxy-template entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2020-09-02 19:12:03,221 INFO success: envoy-proxy-example entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
 ```
 
 #### Verify default app

@@ -1,4 +1,4 @@
-FROM envoyproxy/envoy-alpine:v1.19.1
+FROM envoyproxy/envoy-alpine:v1.21-latest
 
 RUN apk update && apk add --no-cache bash curl dumb-init nodejs npm python3 py3-pip
 RUN pip install --upgrade pip
@@ -14,7 +14,7 @@ RUN chmod +x /run_app.sh
 
 COPY run_envoy.sh /
 RUN chmod +x /run_envoy.sh
-COPY envoy* /etc/envoy/
+COPY config/envoy* /etc/envoy/
 COPY server.crt /etc/
 COPY server.key /etc/
 
