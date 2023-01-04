@@ -2,7 +2,7 @@
 
 
 An Alpine Linux-based Envoy Proxy image. This is a reference implementation for building an Envoy Proxy 
-side car for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault 
+sidecar for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault 
 injection tests, or if you're simply exploring Envoy Proxy features. See the [Envoy Docs](https://www.envoyproxy.io/docs/envoy/latest/) 
 for more info.
 
