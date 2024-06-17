@@ -2,15 +2,16 @@
 
 [![Build](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yml/badge.svg)](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yml)
 
-An Alpine Linux-based Envoy Proxy image. This is a reference implementation for building an Envoy Proxy 
-side car for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault 
+An example Envoy Proxy. This is a reference implementation for building an Envoy Proxy
+sidecar for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault
 injection tests, or if you're simply exploring Envoy Proxy features. See the [Envoy Docs](https://www.envoyproxy.io/docs/envoy/latest/) 
 for more info.
 
 This container runs a statically configured HTTP/HTTPS listener and routes `/` traffic to a co-located 
 upstream `app.js` running on port 5050.
 
-Run the Docker from Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy-example): 
+Run the Docker image from [Docker Hub](https://hub.docker.com/r/jecklgamis/envoy-proxy-example)
+
 ```
 docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
 ```
@@ -23,15 +24,15 @@ To build and run locally, follow the steps below. Ensure you have a working Dock
 git clone git@github.com:jecklgamis/envoy-proxy-example.git
 ```
 
-#### Build the Docker container
+#### Build the Docker image
 ```
 ./generate-ssl-certs.sh
 docker build -t jecklgamis/envoy-proxy-example:main .
 ```
 
-#### Run the Docker container
+#### Run the Docker image
 ```
-docker run  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
+docker run -p 8080:8080  -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
 ```
 Example output:
 ```
@@ -47,7 +48,7 @@ HTTP server listening on http://0.0.0.0:5050
 
 #### Verify default app
 The default app is the minimal `app.js` running on port 5050. The app simply returns any request body, query params,
-or HTTP headers it received. The `/` route in `envoy.yaml` points to the `default_app` cluster that points 
+or HTTP headers it receives. The `/` route in `envoy.yaml` points to the `default_app` cluster that points 
 to this co-located upstream.
 
 ```
