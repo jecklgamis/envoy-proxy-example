@@ -1,4 +1,4 @@
-IMAGE_NAME:=jecklgamis/envoy-proxy-example
+IMAGE_NAME:=envoy-proxy-example
 IMAGE_TAG:=$(shell git rev-parse --abbrev-ref HEAD)
 
 default:

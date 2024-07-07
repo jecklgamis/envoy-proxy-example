@@ -1,4 +1,4 @@
-FROM envoyproxy/envoy:v1.29-latest
+FROM envoyproxy/envoy:v1.30-latest
 RUN apt update -y && apt install -y curl dumb-init nodejs supervisor && rm -rf /var/lib/apt/lists/*
 
 COPY supervisor.ini /etc/supervisor.d/

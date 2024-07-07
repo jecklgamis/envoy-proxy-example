@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 while (true); do
-  curl -k https://localhost:8443 && echo "" && sleep 1
+  curl  http://localhost:8080 && echo "" && sleep 1
 done
