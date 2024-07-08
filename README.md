@@ -47,7 +47,7 @@ HTTP server listening on http://0.0.0.0:5050
 ```
 
 #### Verify default app
-The default app is the minimal `app.js` running on port 5050. The app simply returns any request body, query params,
+The default app is a minimal `app.js` running on port 5050. The app simply returns any request body, query params,
 or HTTP headers it receives. The `/` route in `envoy.yaml` points to the `default_app` cluster that points 
 to this co-located upstream.
 
