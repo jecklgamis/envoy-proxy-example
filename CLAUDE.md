@@ -9,21 +9,21 @@ This is an Envoy Proxy reference implementation demonstrating a containerized re
 ## Build and Run Commands
 
 ```bash
-# Quick start from Docker Hub
-docker run -p 8080:8080 -p 9901:9901 -p 8443:8443 jecklgamis/envoy-proxy-example:main
+# Generate SSL certs then build image in one step
+make all
 
-# Build locally
-./generate-ssl-certs.sh   # Generate self-signed SSL certs (required before build)
-make image                # Build Docker image
+# Generate SSL certs + build + run
+make up
 
-# Run locally
+# Individual steps
+./generate-ssl-certs.sh   # Must run before first build (generates server.crt / server.key)
+make image                # Build Docker image (tagged with current branch name)
 make run                  # Run container with port mappings
 make run-shell            # Run with interactive shell
+make exec-shell           # Exec into already-running container
 
-# Kubernetes deployment
-cd deployment/k8s/helm
-make package              # Package Helm chart
-make install              # Install to cluster
+# Generate continuous test traffic (runs curl in a loop)
+./generate-traffic.sh
 ```
 
 ## Architecture
@@ -35,14 +35,14 @@ Client → Envoy Proxy (8080/HTTP, 8443/HTTPS) → Node.js App (5050 internal)
 ```
 
 **Process Management:** The container uses `supervisor` to run two processes:
-1. **Envoy Proxy** - Listens on ports 8080 (HTTP) and 8443 (HTTPS), routes to upstream
-2. **Node.js App** (`app.js`) - Echo server on port 5050 that returns request metadata as JSON
+1. **Envoy Proxy** (`run-envoy.sh`) - Starts with log level `error`, reads `/etc/envoy/envoy.yaml`
+2. **Node.js App** (`run-app.sh` → `app.js 5050`) - Echo server on port 5050 that returns request metadata as JSON
 
 **Key Files:**
 - `config/envoy.yaml` - Envoy static configuration (listeners, clusters, routes)
-- `supervisor.ini` - Process supervisor config for container
-- `app.js` - Simple upstream HTTP echo server
-- `Dockerfile` - Based on `envoyproxy/envoy:v1.35-latest`
+- `supervisor.ini` - Process supervisor config; both processes log to stdout
+- `app.js` - Upstream HTTP echo server; takes port as CLI argument
+- `Dockerfile` - Based on `envoyproxy/envoy:v1.35-latest`; installs nodejs, supervisor, dumb-init
 
 ## Testing Endpoints
 
@@ -61,10 +61,27 @@ curl http://localhost:9901/config_dump
 
 ## Envoy Configuration
 
-The Envoy config in `config/envoy.yaml` defines:
+`config/envoy.yaml` defines:
 - **Admin interface** on port 9901
-- **HTTP listener** on port 8080 with 15s request timeout
-- **HTTPS listener** on port 8443 with TLS termination
-- **Cluster** `default_app` pointing to 127.0.0.1:5050 (the Node.js app)
+- **HTTPS listener** on port 8443 with TLS termination (cert/key from `/etc/server.crt` and `/etc/server.key`)
+- **HTTP listener** on port 8080
+- **Cluster** `default_app` — LOGICAL_DNS, ROUND_ROBIN, connects to 127.0.0.1:5050 with 0.25s connect timeout
 
-All routes use prefix matching on `/` and forward to the upstream cluster.
+Both listeners route all traffic (`prefix: /`) to `default_app` with a 15s request timeout.
+
+## Kubernetes / Helm
+
+```bash
+cd deployment/k8s/helm
+make dry-run    # Dry run (output saved to dry-run.txt)
+make install    # Package and install chart
+make upgrade    # Package and upgrade existing release
+make rollback   # Rollback release
+make uninstall  # Remove release
+```
+
+The Helm chart version is read from `deployment/k8s/helm/chart/Chart.yaml` using `yq`.
+
+## CI/CD
+
+GitHub Actions (`build.yml`) triggers on pushes to `main`, version tags (`v*`), and PRs to `main`. It generates SSL certs, builds the Docker image, and pushes to Docker Hub (only on non-PR pushes to the real repo using `DOCKER_USERNAME`/`DOCKER_PASSWORD` secrets).
