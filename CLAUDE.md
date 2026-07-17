@@ -42,7 +42,7 @@ Client → Envoy Proxy (8080/HTTP, 8443/HTTPS) → Node.js App (5050 internal)
 - `config/envoy.yaml` - Envoy static configuration (listeners, clusters, routes)
 - `supervisor.ini` - Process supervisor config; both processes log to stdout
 - `app.js` - Upstream HTTP echo server; takes port as CLI argument
-- `Dockerfile` - Based on `envoyproxy/envoy:v1.35-latest`; installs nodejs, supervisor, dumb-init
+- `Dockerfile` - Based on `envoyproxy/envoy:v1.39-latest`; installs nodejs, supervisor, dumb-init
 
 ## Testing Endpoints
 
