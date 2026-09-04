@@ -84,4 +84,4 @@ The Helm chart version is read from `deployment/k8s/helm/chart/Chart.yaml` using
 
 ## CI/CD
 
-GitHub Actions (`build.yml`) triggers on pushes to `main`, version tags (`v*`), and PRs to `main`. It generates SSL certs, builds the Docker image, and pushes to Docker Hub (only on non-PR pushes to the real repo using `DOCKER_USERNAME`/`DOCKER_PASSWORD` secrets).
+GitHub Actions (`build.yaml`) triggers on pushes to `main`, version tags (`v*`), and PRs to `main`. It generates SSL certs, builds the Docker image, and pushes to Docker Hub (only on non-PR pushes to the real repo using `DOCKER_USERNAME`/`DOCKER_PASSWORD` secrets).

@@ -1,6 +1,6 @@
 ## envoy-proxy-example
 
-[![Build](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yml/badge.svg)](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yml)
+[![Build](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yaml/badge.svg)](https://github.com/jecklgamis/envoy-proxy-example/actions/workflows/build.yaml)
 
 An example Envoy Proxy. This is a reference implementation for building an Envoy Proxy
 sidecar for observing your microservice, a general reverse proxy, a test infrastructure for your HTTP fault
